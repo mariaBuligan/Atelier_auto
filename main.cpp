@@ -13,8 +13,11 @@ int main() {
  Angajat a1(n,p,13,5,2003,1,7,2022);
  Director d1(a1);
  Mecanic m(a1);
+ d1.afisare();
+ m.afisare();
 v.push_back(m);
 v.push_back(d1);
+
 for(auto it : v) it.afisare();
 
       return 0;
