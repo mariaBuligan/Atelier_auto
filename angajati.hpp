@@ -34,6 +34,12 @@ class Data{
     virtual void afisare(){
         cout<<zi<<"."<<luna<<"."<<an;
     }
+
+    friend istream &operator>>(istream &fin, Data &d){
+        fin>>d.zi>>d.luna>>d.an;
+        return fin;
+    }
+
 };
 
 class Angajat{
@@ -54,10 +60,7 @@ class Angajat{
              if(ltm->tm_mday >= nz)return true;
              return false;
         }
-       /*  void alocare_nume(char n[],char *c){
-            c=new char[strlen(n)+1];
-            for(int i=0;i<strlen(n);i++)c[i]=n[i];
-        } */
+      
         int an_vechime(){
              time_t now = time(0); 
              tm* ltm = localtime(&now);
@@ -71,11 +74,11 @@ class Angajat{
             prenume="-";
             coeficient=0;
         }
-        Angajat(char n[],char p[],int nz,int nl,int na,int az,int al, int aa){
+        Angajat(string n,string p,int nz,int nl,int na,int az,int al, int aa){
             ID=++count;
-            if(strlen(n)>30)cout<<"ERROR:Lungimea numelui este prea mare\n";
+            if(n.size()>30)cout<<"ERROR:Lungimea numelui este prea mare\n";
             else nume=string(n);
-            if(strlen(p)>30)cout<<"ERROR:Lungimea prenumelui este prea mare\n";
+            if(p.size()>30)cout<<"ERROR:Lungimea prenumelui este prea mare\n";
             else prenume=string(p);
             if(este_major(na,nl,nz)){
             nastere.setA(na);  nastere.setL(nl);  nastere.setZ(nz); 
@@ -109,6 +112,16 @@ class Angajat{
         cout<< "Lucreaza de la data de:"; angajare.afisare(); cout<<endl;
      }
 
+     friend istream &operator>>(istream &fin, Angajat &v){
+        fin>>ws>>v.nume;
+        fin>>v.prenume;
+        fin>>v.nastere;
+        fin>>v.angajare;
+        return fin;
+     }
+
+
+
 };
 int Angajat::count = 0;
 
@@ -135,9 +148,13 @@ class Director: virtual public Angajat{
         }
         return *this;
     }
-    void afisare() override{
+    void afisare(){
         Angajat::afisare();
         cout<<"Pozitie de DIRECTOR. Salariu:"<<salariu<<endl;
+    }
+    friend istream &operator>>(istream &fin, Director &v){
+        fin>>(Angajat&)v;
+        return fin;
     }
 };
 
@@ -168,6 +185,10 @@ class Mecanic: virtual public Angajat{
         Angajat::afisare();
         cout<<"Pozitie de MECANIC. Salariu:"<<salariu<<endl;
     }
+      friend istream &operator>>(istream &fin, Mecanic &v){
+        fin>>(Angajat&)v;
+        return fin;
+    }
     
 };
 class Asistent: virtual public Angajat{
@@ -195,6 +216,10 @@ class Asistent: virtual public Angajat{
      void afisare(){
         Angajat::afisare();
         cout<<"Pozitie de ASISTENT. Salariu:"<<salariu<<endl;
+    }
+      friend istream &operator>>(istream &fin, Asistent &v){
+        fin>>(Angajat&)v;
+        return fin;
     }
     
 };
