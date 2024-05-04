@@ -7,10 +7,12 @@
 using namespace std;  
   
 void citire(istream &fin, vector<Angajat> &v){
-      while(!fin.eof()){
+      if(fin.eof())return;
+      else{
+            Angajat x;
+            cout<<endl;
             string type;
             fin>>type;
-            Angajat x;
             fin>>x;
             if(type=="Director"){
                   Director d(x);
@@ -22,12 +24,14 @@ void citire(istream &fin, vector<Angajat> &v){
                   Asistent a(x);
                   v.push_back(a);
             }
+            citire(fin,v);
       }
 }
 
 int main() {
  
  vector<Angajat> v;
+
  ifstream fin("date.txt");
   citire(fin,v);
   for(auto it : v) it.afisare();

@@ -22,6 +22,7 @@ class Data{
 
             return false;
         }
+        virtual ~Data()=default;
     
      int getZ(){return zi; }
      int getL(){return luna;}
@@ -41,7 +42,8 @@ class Data{
     }
 
 };
-
+// /Users/mariabuligan/Documents/GitHub/Atelier_auto/angajati.hpp
+// /Users/mariabuligan/Desktop/Extra/Atelier_auto/angajati.hpp
 class Angajat{
     protected:
       int ID;
@@ -68,14 +70,15 @@ class Angajat{
         }
 
         Angajat(){
-
+            //cout<<"A fara paranteze"<<endl;
             ID=++count;
             nume='-';
             prenume="-";
             coeficient=0;
         }
         Angajat(string n,string p,int nz,int nl,int na,int az,int al, int aa){
-            ID=++count;
+            ID=count;
+             //cout<<"A cu paranteze"<<endl;
             if(n.size()>30)cout<<"ERROR:Lungimea numelui este prea mare\n";
             else nume=string(n);
             if(p.size()>30)cout<<"ERROR:Lungimea prenumelui este prea mare\n";
@@ -86,12 +89,15 @@ class Angajat{
             angajare.setA(aa); angajare.setL(al); angajare.setZ(az);
 
         }
-        Angajat(const Angajat &v): ID(v.ID),nastere(v.nastere),angajare(v.angajare){
+        Angajat(const Angajat &v): nastere(v.nastere),angajare(v.angajare){
+            ID=++count;
+             //cout<<"A copiere"<<endl;
             nume=v.nume;
             prenume=v.prenume;
             coeficient=v.coeficient;
         }
-        ~Angajat(){
+        virtual ~Angajat(){
+            // cout<<"DESTRUCTOR A"<<endl;
             --count;
         }
 
@@ -113,7 +119,7 @@ class Angajat{
      }
 
      friend istream &operator>>(istream &fin, Angajat &v){
-        fin>>ws>>v.nume;
+        fin>>v.nume;
         fin>>v.prenume;
         fin>>v.nastere;
         fin>>v.angajare;
@@ -130,15 +136,18 @@ class Director: virtual public Angajat{
      float salariu;
     public:
      Director():Angajat(){
+         //cout<<"D fara paranteze"<<endl;
          coeficient=2;
      }
      Director(const Angajat &v):Angajat(v){
+        //cout<<"D cu paranteze"<<endl;
          count++;
         int vechime=an_vechime();
          coeficient=2;
          salariu=coeficient*1000*(float)vechime;
      }
     ~Director(){
+       // cout<<"DESTRUCTOR D"<<endl;
         Angajat::~Angajat();
     }
     Director &operator=(const Director &v){
@@ -163,15 +172,17 @@ class Mecanic: virtual public Angajat{
      float salariu;
     public:
      Mecanic():Angajat(){
+       // cout<<"M fara paranteze"<<endl;
          coeficient=1.5;
      }
      Mecanic(const  Angajat &v):Angajat(v){
-        count++;
+         // cout<<"M cu paranteze"<<endl;
         coeficient=1.5;
         int vechime=an_vechime();
          salariu=coeficient*1000*(float)vechime;
      }
     ~Mecanic(){
+           // cout<<"DESTRUCTOR M"<<endl;
         Angajat::~Angajat();
     }
     Mecanic &operator=(const Mecanic &v){
@@ -196,14 +207,17 @@ class Asistent: virtual public Angajat{
         float salariu;
      public:
      Asistent():Angajat(){
+        //cout<<"As fara paranteze"<<endl;
          coeficient=1.0;
      }
      Asistent(const Angajat &v):Angajat(v){
+        // cout<<"As cu paranteze"<<endl;
         coeficient=1.0;
         int vechime=an_vechime();
          salariu=coeficient*1000*(float)vechime;
      }
     ~Asistent(){
+          //  cout<<"DESTRUCTOR As"<<endl;
         Angajat::~Angajat();
     }
     Asistent &operator=(const Asistent &v){
