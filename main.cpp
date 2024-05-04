@@ -2,39 +2,39 @@
 #include <iostream>  
 #include <vector>
 #include <fstream>
+#include <typeinfo>
 #include "angajati.hpp"
   
 using namespace std;  
   
-void citire(istream &fin, vector<Angajat> &v){
-      if(fin.eof())return;
-      else{
+void citire(istream &fin, Angajat **v){
+      int i=0;
+      while(!fin.eof()){
             Angajat x;
-            cout<<endl;
             string type;
             fin>>type;
             fin>>x;
             if(type=="Director"){
                   Director d(x);
-                  v.push_back(d);
+                  v[i]=new Director(d);
             }else if(type=="Mecanic"){
                   Mecanic m(x);
-                  v.push_back(m);
+                 v[i]=new Mecanic(m);
             }else{
                   Asistent a(x);
-                  v.push_back(a);
+                 v[i]=new Asistent(a);
             }
-            citire(fin,v);
       }
 }
 
 int main() {
- 
- vector<Angajat> v;
 
  ifstream fin("date.txt");
+ int n=4;
+ Angajat **v=new Angajat*[n];
   citire(fin,v);
-  for(auto it : v) it.afisare();
-
+  for(int i=0;i<n;i++){
+      v[i]->afisare();
+  }
       return 0;
 }
