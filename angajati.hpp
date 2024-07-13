@@ -31,9 +31,10 @@ class Data{
      void setL(int x){ luna=x;}
      void setA(int x){ an=x; }
 
-    virtual void print(){
+     void print(){
         cout<<zi<<"."<<luna<<"."<<an;
     }
+    
 };
 class Angajat{
     protected:
@@ -95,6 +96,10 @@ class Angajat{
         cout<< "Nascut la data de:"; nastere.print(); cout<<endl;
         cout<< "Lucreaza de la data de:"; angajare.print(); cout<<endl;
      }
+      virtual int getID(){ return 0;}
+      void set_nume(string n,string p){
+            nume=n;prenume=p;
+      }
 
 };
 int Angajat::ID;
@@ -123,6 +128,7 @@ class Director: virtual public Angajat{
         Angajat::afisare();
         cout<<"Pozitie de DIRECTOR. Salariu:"<<salariu<<endl;
     }
+   int getID(){return Nr_angajat;}
 };
 
 class Mecanic: virtual public Angajat{
@@ -149,6 +155,7 @@ class Mecanic: virtual public Angajat{
         Angajat::afisare();
         cout<<"Pozitie de MECANIC. Salariu:"<<salariu<<endl;
     }
+      int getID(){return Nr_angajat;}
 };
 class Asistent: virtual public Angajat{
      private:
@@ -174,4 +181,26 @@ class Asistent: virtual public Angajat{
         Angajat::afisare();
         cout<<"Pozitie de ASISTENT. Salariu:"<<salariu<<endl;
     }  
+     int getID(){return Nr_angajat;}
 };
+
+void stergere_angajat(int Id, vector <Angajat*> &v){
+    for(int i=0;i<v.size();i++){
+        if(v[i]->getID()==Id){ 
+            v.erase(v.begin()+i);
+            break;
+        }
+   } 
+}
+
+void editare_angajat(int Id, vector <Angajat*> &v){
+    string n,p;
+    cout<<"Introduceti noul nume:"; cin>>n;
+    cout<<"Introduceti noul prenume:"; cin>>p;
+     for(int i=0;i<v.size();i++){
+       if(v[i]->getID()==Id){ 
+            v[i]->set_nume(n,p);
+             break;
+       }
+     }
+}
