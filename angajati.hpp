@@ -45,14 +45,6 @@ class Angajat{
       Data angajare;
       float coeficient;
     public:
-        bool este_major(int na,int nl, int nz){
-             time_t now = time(0); 
-             tm* ltm = localtime(&now);
-             if(ltm->tm_year +1900 - na >18)return true;
-             if(ltm->tm_mon +1 > nl)return true;
-             if(ltm->tm_mday >= nz)return true;
-             return false;
-        }
         int an_vechime(){
              time_t now = time(0); 
              tm* ltm = localtime(&now);
@@ -65,14 +57,9 @@ class Angajat{
             coeficient=0;
         }
         Angajat(string n,string p,int nz,int nl,int na,int az,int al, int aa){
-            if(n.size()>30)cout<<"ERROR:Lungimea numelui este prea mare\n";
-            else nume=n;
-            if(p.size()>30)cout<<"ERROR:Lungimea prenumelui este prea mare\n";
-            else prenume=p;
-            if(este_major(na,nl,nz)){
+             nume=n;
+             prenume=p;
             nastere.setA(na);  nastere.setL(nl);  nastere.setZ(nz); 
-            }else cout<<"ERROR is a minor\n";
-
             angajare.setA(aa); angajare.setL(al); angajare.setZ(az);
         }
         Angajat(const Angajat &v):nastere(v.nastere),angajare(v.angajare){
@@ -99,6 +86,16 @@ class Angajat{
       virtual int getID(){ return 0;}
       void set_nume(string n,string p){
             nume=n;prenume=p;
+      }
+      void set_nastere(int nz,int nl,int na){
+         nastere.setZ(nz);
+         nastere.setL(nl);
+         nastere.setA(na);
+      }
+      void set_angajare(int nz,int nl,int na){
+         angajare.setZ(nz);
+         angajare.setL(nl);
+         angajare.setA(na);
       }
 
 };
@@ -184,6 +181,21 @@ class Asistent: virtual public Angajat{
      int getID(){return Nr_angajat;}
 };
 
+bool este_major(int nz,int nl, int na){
+             time_t now = time(0); 
+             tm* ltm = localtime(&now);
+             int age = ltm->tm_year + 1900 - na;
+    return (age > 18) || (age == 18 && (ltm->tm_mon + 1 > nl || (ltm->tm_mon + 1 == nl && ltm->tm_mday >= nz)));
+}
+bool este_in_viitor(int z,int l,int a){
+             time_t now = time(0); 
+             tm* ltm = localtime(&now);
+             if (a > ltm->tm_year + 1900) return true;  
+             if (a == ltm->tm_year + 1900 && l > ltm->tm_mon + 1) return true;
+             if (a == ltm->tm_year + 1900 && l == ltm->tm_mon + 1 && z > ltm->tm_mday) return true;
+             return false;
+}
+
 void stergere_angajat(int Id, vector <Angajat*> &v){
     for(int i=0;i<v.size();i++){
         if(v[i]->getID()==Id){ 
@@ -204,3 +216,53 @@ void editare_angajat(int Id, vector <Angajat*> &v){
        }
      }
 }
+
+
+void adaugare_angajat(vector <Angajat*> &v){
+    string n,p;
+    char tip;
+    int nz,nl,na,az,al,aa;
+
+    cout<<"Introduceti numele:"; cin>>n;
+    while(n.size()>30){
+        cout<<"ERROR:Lungimea numelui este prea mare\n";
+        cin>>n;
+     }
+
+    cout<<"Introduceti prenumele:"; cin>>p;
+     while(p.size()>30){
+        cout<<"ERROR:Lungimea prenumelui este prea mare\n";
+        cin>>p;
+     }
+     cout<<"Introduceti data de nastere(zz ll aaa):"; cin>>nz>>nl>>na;
+     cout<<nz<<" "<<nl<<" "<<na<<endl;
+     if(este_major(nz,nl,na)==false){
+        cout<<"NU angajam minori. Angajatul nu a fost creat."<<endl;
+        return;
+     }
+     cout<<"Introduceti data angajarii(zz ll aaa):"; cin>>az>>al>>aa;
+          cout<<az<<" "<<al<<" "<<aa<<endl;
+     while(este_in_viitor(az,al,aa)){
+        cout<<"Data gresita. Introduceti din nou(zz ll aaaa):"<<endl;
+        cin>>az>>al>>aa;
+     }
+     cout<<"Introduceti tipul de angajat(d=Direcor, m= Mecanic, a=Asistent):";cin>>tip;
+     while(tip!='d' && tip!='m' && tip!='a'){
+        cout<<"Eroare la introducerea datelor. Introduceti una dintre urmatoarele optiuni 'd'=Director, 'm'= Mecanic, 'a'=Asistent.";
+        cin>>tip;
+     }
+
+     Angajat a(n,p,nz,nl,na,az,al,aa);
+     if(tip=='d'){
+        Director *d = new Director(a);
+        v.push_back(d);
+     }else if(tip=='m'){
+        Mecanic *m = new Mecanic(a);
+        v.push_back(m);
+     }else{
+        Asistent *as= new Asistent(a);
+        v.push_back(as);
+     }
+
+     cout<<"ANGAJAT CREEAT CU SUCCES!"<<endl;
+};
