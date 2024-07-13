@@ -1,40 +1,26 @@
-#include <ctime>   
+  
 #include <iostream>  
 #include <vector>
-#include <fstream>
-#include <typeinfo>
 #include "angajati.hpp"
   
 using namespace std;  
   
-void citire(istream &fin, Angajat **v){
-      int i=0;
-      while(!fin.eof()){
-            Angajat x;
-            string type;
-            fin>>type;
-            fin>>x;
-            if(type=="Director"){
-                  Director d(x);
-                  v[i]=new Director(d);
-            }else if(type=="Mecanic"){
-                  Mecanic m(x);
-                 v[i]=new Mecanic(m);
-            }else{
-                  Asistent a(x);
-                 v[i]=new Asistent(a);
-            }
-      }
-}
-
 int main() {
 
- ifstream fin("date.txt");
- int n=4;
- Angajat **v=new Angajat*[n];
-  citire(fin,v);
-  for(int i=0;i<n;i++){
-      v[i]->afisare();
-  }
+ vector<Angajat> v;
+ Angajat a1;
+ a1=Angajat("Buligan","Maria",13,5,2003,1,7,2022);
+ Angajat a2;
+ a2=Angajat("Popescu","Alexia",2,7,1998,1,10,2017);
+ Director d1(a1),d2(a2);
+ d1.afisare();
+ d2.afisare();
+ 
+ v.push_back(d1);
+
+/* for(auto it : v) {
+      it.afisare();
+} */
+
       return 0;
 }
