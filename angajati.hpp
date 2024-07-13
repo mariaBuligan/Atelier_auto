@@ -79,7 +79,7 @@ class Angajat{
             prenume=v.prenume;
             coeficient=v.coeficient;
         }
-        ~Angajat(){}
+        virtual ~Angajat(){}
 
         Angajat &operator=(const Angajat&v){
             if(this!= &v){
@@ -90,11 +90,7 @@ class Angajat{
             }
             return *this;
         }
-    static void printID(void){
-        cout<<"ID:"<<ID<<endl;
-    }
-      void print(){
-        Angajat::printID();
+      virtual void afisare(){
         cout<<nume <<" "<<prenume<<endl;
         cout<< "Nascut la data de:"; nastere.print(); cout<<endl;
         cout<< "Lucreaza de la data de:"; angajare.print(); cout<<endl;
@@ -108,14 +104,14 @@ class Director: virtual public Angajat{
      int Nr_angajat;
     public:
      Director():Angajat(){
-         ++ID;
+         Nr_angajat=++ID;
          coeficient=2;
      }
      Director(const Angajat &v):Angajat(v){
         Nr_angajat=++ID;
         int vechime=an_vechime();
          coeficient=2;
-         cout<<"idull este:"<<ID<<" "<<coeficient<<" "<<vechime<<endl;
+         //cout<<"idull este:"<<ID<<" "<<coeficient<<" "<<vechime<<endl;
          salariu=coeficient*1000*(float)vechime;
      }
     ~Director(){
@@ -123,7 +119,8 @@ class Director: virtual public Angajat{
         Angajat::~Angajat();
     }
     void afisare(){
-        Angajat::print();
+        cout<<"ID:"<<Nr_angajat<<endl;
+        Angajat::afisare();
         cout<<"Pozitie de DIRECTOR. Salariu:"<<salariu<<endl;
     }
 };
@@ -131,41 +128,50 @@ class Director: virtual public Angajat{
 class Mecanic: virtual public Angajat{
     private:
      float salariu;
+     int Nr_angajat;
     public:
      Mecanic():Angajat(){
+        Nr_angajat=++ID;
          coeficient=1.5;
      }
      Mecanic(const  Angajat &v):Angajat(v){
+        Nr_angajat=++ID;
         coeficient=1.5;
         int vechime=an_vechime();
          salariu=coeficient*1000*(float)vechime;
      }
     ~Mecanic(){
         Angajat::~Angajat();
+        --ID;
     }
      void afisare(){
-        Angajat::print();
+        cout<<"ID:"<<Nr_angajat<<endl;
+        Angajat::afisare();
         cout<<"Pozitie de MECANIC. Salariu:"<<salariu<<endl;
     }
-    
 };
 class Asistent: virtual public Angajat{
      private:
         float salariu;
+        int Nr_angajat;
      public:
      Asistent():Angajat(){
+        Nr_angajat=++ID;
          coeficient=1.0;
      }
      Asistent(const Angajat &v):Angajat(v){
+        Nr_angajat=++ID;
         coeficient=1.0;
         int vechime=an_vechime();
          salariu=coeficient*1000*(float)vechime;
      }
     ~Asistent(){
         Angajat::~Angajat();
+        --ID;
     }
      void afisare(){
-        Angajat::print();
+        cout<<"ID:"<<Nr_angajat<<endl;
+        Angajat::afisare();
         cout<<"Pozitie de ASISTENT. Salariu:"<<salariu<<endl;
     }  
 };
