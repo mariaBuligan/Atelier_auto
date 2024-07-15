@@ -12,10 +12,11 @@
 
 
 void display_queue(queue <Masini*> q){
+    cout<<"Coada: ";
     if(q.empty())cout<<"-"<<endl;
     else{
         while(!q.empty()){
-             cout << '\t' << q.front();
+             q.front()->getID();
              q.pop();
         }
         cout<<endl;
@@ -50,12 +51,13 @@ class Employee_Scheduele{
         Employee_Scheduele():time(10),employee(){}
         Employee_Scheduele(Angajat* v):employee(v){}
 
-         bool AddTO_Employee_Scheduele(Masini* v){
-            if(employee_not_overworked){
-                 q.push(v);
-
-
+         bool AddTO_Employee_Scheduele(Masini* const &v){
+            if(employee_not_overworked(q,v->getType())){
+                cout<<"am intrat"<<endl;
                 float vtime;
+
+                 q.push(v);
+                 display_queue(q);
                 if(v->getType() == "Standard")vtime=1.0;
                     else if(v->getType() == "Autobuz")vtime=2.0;
                          else vtime=2.5;
@@ -68,6 +70,7 @@ class Employee_Scheduele{
                 return false;
             }
         }
+
         void afisare(){
             cout<<"Angajatul  cu Id-ul :"<<employee->getID()<<" are de reparat urmatoarele Masini:"<<endl;
             display_queue(q);
@@ -102,8 +105,9 @@ class Atelier{
 void Adauga_la_angajat(Atelier coada_generala, Employee_Scheduele orare[],int n){
      map<Masini*,int> mapa =coada_generala.getMap();
      bool found_space=false;
-
+    
      for(auto it=mapa.begin();it!=mapa.end();it++){
+        cout<<"+";
         if(it->second ==0){
             for(int i=0;i<n;i++){
                 if(orare[i].AddTO_Employee_Scheduele((it)->first)){
