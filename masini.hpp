@@ -22,6 +22,7 @@ class Masini{
     }
     virtual float polita(){return 0;}
     virtual float polita_DISCOUNT(){return 0;}
+    virtual string getType(){return "Masina";}
 };
 
 class Standard: public Masini{
@@ -47,6 +48,7 @@ class Standard: public Masini{
          float polita_DISCOUNT(){
             return polita()-polita()*0.05;
         }
+        string getType(){return "Standard";}
 };
 
 class Autobuz: public Masini{
@@ -71,6 +73,7 @@ class Autobuz: public Masini{
          float polita_DISCOUNT(){
             return polita()-polita()*0.1;
         }
+        string getType(){return "Autobuz";}
 };
 
 class Camion: public Masini{
@@ -93,4 +96,5 @@ class Camion: public Masini{
         float polita_DISCOUNT(){
             return polita()-polita()*0.15;
         }
+        string getType(){return "Standard";}
 };
