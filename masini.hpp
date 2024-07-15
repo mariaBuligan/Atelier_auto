@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <ctime>
 using namespace std;
@@ -23,6 +24,7 @@ class Masini{
     virtual float polita(){return 0;}
     virtual float polita_DISCOUNT(){return 0;}
     virtual string getType(){return "Masina";}
+    virtual int getID(){return ID;}
 };
 
 class Standard: public Masini{
@@ -49,6 +51,7 @@ class Standard: public Masini{
             return polita()-polita()*0.05;
         }
         string getType(){return "Standard";}
+        int getID(){return ID;}
 };
 
 class Autobuz: public Masini{
@@ -56,12 +59,12 @@ class Autobuz: public Masini{
       int nr_loc;
     public:
        Autobuz():Masini(){};
-        Autobuz(int id, float k,int a,bool D,int nr):Masini(id,k,a,D),nr_loc(nr){}
-        void afisare(){
+       Autobuz(int id, float k,int a,bool D,int nr):Masini(id,k,a,D),nr_loc(nr){}
+       Autobuz(const Masini &m, int nr):Masini(m),nr_loc(nr){}; 
+       void afisare(){
             Masini::afisare();
             cout<<"Numar de locuri:"<<nr_loc<<endl;
         }
-        Autobuz(const Masini &m, int nr):Masini(m),nr_loc(nr){};
         float polita(){
             int vechime = lct->tm_year +1900 - an;
             float polita = vechime *200.0;
@@ -74,6 +77,7 @@ class Autobuz: public Masini{
             return polita()-polita()*0.1;
         }
         string getType(){return "Autobuz";}
+        int getID(){return ID;}
 };
 
 class Camion: public Masini{
@@ -97,4 +101,5 @@ class Camion: public Masini{
             return polita()-polita()*0.15;
         }
         string getType(){return "Standard";}
+        int getID(){return ID;}
 };
