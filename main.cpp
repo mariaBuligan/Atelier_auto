@@ -13,13 +13,6 @@ void afisare_vector(vector<T> &v){
       for(auto it:v) it->afisare();
 }
 
-void Setare_Angajati(Employee_Scheduele *orare,vector<Angajat*> ang){
-      int i=0;
-      for(auto it:ang){
-            orare[i]=Employee_Scheduele(it);
-            i++;
-      }
-}
 
 int main() {
 
@@ -34,6 +27,7 @@ int main() {
  Autobuz *audi = new Autobuz (m2,12);
  Camion *cam = new Camion(m3,2.5);
  Camion *cam2= new Camion(m2,3);
+ Standard *volw = new Standard(m3,true);
 
  cars.push_back(volvo);
  cars.push_back(audi);
@@ -55,6 +49,7 @@ int main() {
  coada_generala.AddToGeneralQueue(audi,0);
  coada_generala.AddToGeneralQueue(cam,1); 
   coada_generala.AddToGeneralQueue(cam2,1); 
+  coada_generala.AddToGeneralQueue(volw,1); 
  coada_generala.afisare();
 
 Employee_Scheduele orare[employes.size()];
@@ -62,7 +57,8 @@ Setare_Angajati(orare,employes);
 int n=sizeof(orare)/sizeof(orare[0]);
 for(int i=0;i<n;i++)orare[i].afisare();
 
-Adauga_la_angajat(coada_generala,orare,employes.size());
+Adauga_la_angajat(coada_generala, orare, employes.size());
+for(int i=0;i<n;i++)orare[i].afisare();
 
       return 0;
 }

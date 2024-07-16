@@ -21,6 +21,15 @@ class Masini{
         if(Diesel)cout<<"Diesel"<<endl;
         else cout<<"NU Diesel"<<endl;
     }
+    friend istream& operator>>(istream &fin, Masini &m){
+        fin>>m.ID>>m.km>>m.an;
+        string motor;
+        fin>>motor;
+        if(motor=="Diesel")m.Diesel=true;
+        else m.Diesel=false;
+
+        return fin;
+    }
     virtual float polita(){return 0;}
     virtual float polita_DISCOUNT(){return 0;}
     virtual string getType(){return "Masina";}
@@ -34,6 +43,15 @@ class Standard: public Masini{
         Standard():Masini(){};
         Standard(int id, float k,int a,bool D,bool M):Masini(id,k,a,D),Manuala(M){}
         Standard(const Masini &m, bool M):Masini(m),Manuala(M){};
+        friend istream& operator>>(istream &fin,Standard &v){
+            fin>>(Masini&)v;
+            string man;
+            fin >>man;
+            if(man=="Manuala")v.Manuala=true;
+            else v.Manuala=false;
+
+            return fin;
+        }
         void afisare(){
             Masini::afisare();
             cout<<"Tip de transmisie:";
@@ -61,6 +79,11 @@ class Autobuz: public Masini{
        Autobuz():Masini(){};
        Autobuz(int id, float k,int a,bool D,int nr):Masini(id,k,a,D),nr_loc(nr){}
        Autobuz(const Masini &m, int nr):Masini(m),nr_loc(nr){}; 
+       friend istream& operator>>(istream &fin,Autobuz &v){
+            fin>>(Masini&)v;
+            fin>>v.nr_loc;
+            return fin;
+        }
        void afisare(){
             Masini::afisare();
             cout<<"Numar de locuri:"<<nr_loc<<endl;
@@ -87,6 +110,11 @@ class Camion: public Masini{
         Camion():Masini(){};
         Camion(int id, float k,int a,bool D,float t):Masini(id,k,a,D),tonaj(t){}
         Camion(const Masini &m, float t):Masini(m),tonaj(t){};
+        friend istream& operator>>(istream &fin,Camion &v){
+            fin>>(Masini&)v;
+            fin>>v.tonaj;
+            return fin;
+        }
         void afisare(){
             Masini::afisare();
             cout<<"Tonajul:"<<tonaj<<endl;
@@ -100,6 +128,6 @@ class Camion: public Masini{
         float polita_DISCOUNT(){
             return polita()-polita()*0.15;
         }
-        string getType(){return "Standard";}
+        string getType(){return "Camion";}
         int getID(){return ID;}
 };

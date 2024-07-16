@@ -206,16 +206,17 @@ void stergere_angajat(int Id, vector <Angajat*> &v){
    } 
 }
 
-void editare_angajat(int Id, vector <Angajat*> &v){
+bool editare_angajat(int Id, vector <Angajat*> &v){
     string n,p;
     cout<<"Introduceti noul nume:"; cin>>n;
     cout<<"Introduceti noul prenume:"; cin>>p;
      for(int i=0;i<v.size();i++){
        if(v[i]->getID()==Id){ 
             v[i]->set_nume(n,p);
-             break;
+             return true;
        }
      }
+     return false;
 }
 
 
@@ -267,3 +268,13 @@ void adaugare_angajat(vector <Angajat*> &v){
 
      cout<<"ANGAJAT CREEAT CU SUCCES!"<<endl;
 };
+
+bool stergere_angajat(vector <Angajat*> &v,int id){
+         for(int i=0;i<v.size();i++){
+            if(v[i]->getID()== id){ 
+                auto it=v.begin()+i;
+                v.erase(it);
+                return true;
+            }}
+    return false;
+}
