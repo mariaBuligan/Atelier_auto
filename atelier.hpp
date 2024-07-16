@@ -9,6 +9,7 @@
 #include "masini.hpp"
 #include "angajati.hpp"
 
+using namespace std;
 
 
 void display_queue(queue <Masini*> q){
@@ -57,11 +58,9 @@ class Employee_Scheduele{
                          else vtime=2.5;
                 if(vtime < this->time)this->time=vtime;      
 
-                cout<<"Masina d-voastra va fi reparata de Angajatul "<<employee->getID()<<", in "<<vtime<<" zile."<<endl;
+                cout<<"Masina "<<v->getID()<<" va fi reparata de Angajatul "<<employee->getID()<<", in "<<vtime<<" zile."<<endl;
                 return true;
             }
-
-                cout<<"Angajatul nu este disponibil momentan. Va fi disponibil in:"<<time<<" zile."<<endl;
                 return false;
             
         }
@@ -93,34 +92,57 @@ class Atelier{
             }
        }
 
-       map<Masini*,int> getMap(){return general;}
+       map<Masini*,int> &getMap(){return general;}
 
 };
 
-void Adauga_la_angajat(Atelier coada_generala, Employee_Scheduele orare[],int n){
-     map<Masini*,int> mapa =coada_generala.getMap();
-     bool found_space=false;
-
-     for(auto it=mapa.begin();it!=mapa.end();it++){
-
+void Adauga_la_angajat(Atelier &coada_generala, Employee_Scheduele orare[],int n){
+     map<Masini*,int> &mapa =coada_generala.getMap();
+     
+     for(auto it=mapa.begin();it!=mapa.end();){
+        bool found_space=false;
         if(it->second == 0){
             for(int i=0;i<n;i++){
                 if(orare[i].AddTO_Employee_Scheduele((it)->first)==true){
+                    it=mapa.erase(it);
                     found_space=true;
                     break;
                }}
-            if(found_space==false)cout<<"NU EXISTA NICI UN LOC DISPONIBIL"<<endl;
+            if(found_space==false){
+                cout<<"NU EXISTA NICI UN LOC DISPONIBIL"<<endl;
+                 char rasp;
+                cout<<"Masina "<<it->first->getID()<<" nu poate fi reparata momentan.Doriti sa parasiti atelierul sau sa asteptati?(d=da,n=nu):";
+                cin>>rasp;
+                if(rasp=='d'){
+                     it=mapa.erase(it);
+                }
+                else{
+                    it++;
+                }
+            }
         }else{
             for(int i=0;i<n;i++){
                 if(orare[i].getEmployeeID()==it->second ){
-                    if(orare[i].AddTO_Employee_Scheduele((it)->first) == true) break;
-                    else cout<<"ANGAJATUL DORIT NU ESTE DISPONIBIL"<<endl;
-                }
-            }
-        }
-
+                    if(orare[i].AddTO_Employee_Scheduele((it)->first) == true){
+                        it=mapa.erase(it);
+                        break;
+                    } 
+                    else {
+                        cout<<"ANGAJATUL DORIT NU ESTE DISPONIBIL"<<endl;
+                         char rasp;
+                         cout<<"Masina "<<it->first->getID()<<" nu poate fi reparata momentan.Doriti sa parasiti atelierul sau sa se ocupe un alt angajat?(d=da,n=nu):";
+                        cin>>rasp;
+                        if(rasp=='d'){
+                           it=mapa.erase(it);
+                        }else{
+                            Masini *aux=it->first;
+                            it=mapa.erase(it);
+                            mapa.insert(pair<Masini*,int>(aux,0));
+                        }
+                }}
+        }}
      }
-}
+};
 
 void Setare_Angajati(Employee_Scheduele *orare,vector<Angajat*> ang){
       int i=0;
@@ -128,5 +150,5 @@ void Setare_Angajati(Employee_Scheduele *orare,vector<Angajat*> ang){
             orare[i]=Employee_Scheduele(it);
             i++;
       }
-}
+};
 

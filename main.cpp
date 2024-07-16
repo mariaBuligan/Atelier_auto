@@ -29,16 +29,9 @@ int main() {
  Camion *cam2= new Camion(m2,3);
  Standard *volw = new Standard(m3,true);
 
- cars.push_back(volvo);
- cars.push_back(audi);
- cars.push_back(cam);
-
  Angajat a("Buligan","Maria",13,5,2003,1,7,2022);
  Mecanic *mec = new Mecanic(a);
  employes.push_back(mec);
-
- afisare_vector(employes);
- afisare_vector(cars);
 
  for(auto it:cars){
       cout<<it->polita()<<" "<<it->polita_DISCOUNT()<<endl;
@@ -58,6 +51,9 @@ int n=sizeof(orare)/sizeof(orare[0]);
 for(int i=0;i<n;i++)orare[i].afisare();
 
 Adauga_la_angajat(coada_generala, orare, employes.size());
+stergere_din_coada(coada_generala,1767);
+coada_generala.afisare();
+
 for(int i=0;i<n;i++)orare[i].afisare();
 
       return 0;

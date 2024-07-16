@@ -32,7 +32,6 @@ void citireMasini(ifstream &fin,Atelier &coada_generala){
         citireMasini(fin,coada_generala);
         
     }
-    cout<<"AM CITIT FISIERUL"<<endl;
 }
 
 
@@ -51,7 +50,7 @@ void optiune_3(vector<Angajat*> &v){
     if(editare_angajat(id_cautat,v))cout<<"Angajatul a fost editat cu succes"<<endl;
      else cout<<"Angajatul cu ID-ul:"<<id_cautat<<" nu a fost gasit."<<endl;
 }
-void optiune_4(Atelier coada_generala, vector <Angajat*> &v, Employee_Scheduele *orare){
+void optiune_4(Atelier &coada_generala, vector <Angajat*> &v, Employee_Scheduele *orare){
     if(v.size()==0){
         cout<<"NE PARE RAU< ATELIERUL ESTE INCHIS!"<<endl;
         return;
@@ -64,6 +63,8 @@ void optiune_4(Atelier coada_generala, vector <Angajat*> &v, Employee_Scheduele 
     for(int i=0;i<n;i++)orare[i].afisare();
 
     Adauga_la_angajat(coada_generala, orare, v.size());
+    cout<<endl<<endl;
+     for(int i=0;i<v.size();i++)orare[i].afisare();
 
 }
 void optiune_5(Atelier coada_generala){

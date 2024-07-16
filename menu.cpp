@@ -26,8 +26,10 @@ int  main(){
      
      ifstream fin("date.txt");
      citireMasini(fin,coada_generala);
-    cout<<"Introduceti un numar corepsunzator uneia dintre optiunile de mai jos:"; 
-    display_options();
+     display_options();
+     cout<<"Introduceti un numar corepsunzator uneia dintre optiunile de mai sus:"; cin>>option;
+    
+     for(int i=0;i<v.size();i++)orare[i].afisare();
      
     while(option!=0){
         switch(option){
@@ -50,16 +52,12 @@ int  main(){
                 cout<<"Aceasta optiune nu exista."<<endl;
                 break;
         }
-        cout<<"Introduceti un numar corepsunzator uneia dintre optiunile de mai jos:"; 
+        display_options();
+        cout<<"Introduceti un numar corepsunzator uneia dintre optiunile de mai sus:"; 
         cin>>option;
     } 
-    cout<<"VA MULTUMIM PENTRU VIZITA! VA MAI ASTEPTAM!\n";
-
+    cout<<"VA MULTUMIM PENTRU VIZITA! VA MAI ASTEPTAM!"<<endl;
     coada_generala.afisare();
 
-
-
-
     return 0;
-
 }

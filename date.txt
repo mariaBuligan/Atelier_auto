@@ -1,16 +1,22 @@
 Standard
-1234 120000 2009 Disel Manuala 0 //1
+1234 120000 2009 Disel Manuala 0
 Standard
-29804 200000 2005 Disel Manuala 0 //1
+29804 200000 2005 Disel Manuala 0
 Standard
-7384 90000 2009 Motorina Automata 2 //2
+7384 90000 2009 Motorina Automata 2
 Autobuz
-63456 250000 2015 Disel 15 2 //2
+63456 250000 2015 Disel 15 2
 Standard
-5782 70000 2020 Motorina Automata 1 //1
+5782 70000 2020 Motorina Automata 1
 Standard
-9898 80000 2018 Disel Automata 0 //2
+9898 80000 2018 Disel Automata 0
 Autobuz
-3985 190000 2013 Disel 19 0  //1
+3985 190000 2013 Disel 19 0
 Camion
-63456 250000 2015 Disel 2.7 0 ??
+64456 250000 2015 Disel 2.7 0
+Camion
+9999 190000 2013 Disel 19 0
+Standard
+8888 90000 2009 Motorina Automata 1
+Camion
+4321 190000 2013 Disel 19 0

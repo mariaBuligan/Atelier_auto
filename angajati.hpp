@@ -237,13 +237,11 @@ void adaugare_angajat(vector <Angajat*> &v){
         cin>>p;
      }
      cout<<"Introduceti data de nastere(zz ll aaa):"; cin>>nz>>nl>>na;
-     cout<<nz<<" "<<nl<<" "<<na<<endl;
      if(este_major(nz,nl,na)==false){
         cout<<"NU angajam minori. Angajatul nu a fost creat."<<endl;
         return;
      }
      cout<<"Introduceti data angajarii(zz ll aaa):"; cin>>az>>al>>aa;
-          cout<<az<<" "<<al<<" "<<aa<<endl;
      while(este_in_viitor(az,al,aa)){
         cout<<"Data gresita. Introduceti din nou(zz ll aaaa):"<<endl;
         cin>>az>>al>>aa;
